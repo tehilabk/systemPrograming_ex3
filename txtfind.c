@@ -9,7 +9,7 @@ int getLine(char arr[], char word[])
     int length = strlen(word);
     int j = 0;
     for (int i = 0; i < LINE; i++)
-    {
+    {  
         while (arr[i] == word[j])
         {
             j++;
@@ -25,90 +25,95 @@ int getLine(char arr[], char word[])
     return 0;
 }
 
-
-void getword(char arr[], char word[])
+void getWord(char arr[], char word[])
 {
-    
-    char printWord[WORD];
-    int length = strlen(word);
-    int j = 0;
+    // printf("line: %s\n", arr);
 
-    for (int i = 0; i < LINE; i++)
+    char *allWords[LINE];
+    int WordLength = strlen(word);
+    int next = 0;
+    char potentialWord[WORD];
+    allWords[next] = strtok(arr, " \n\t\0\r");
+    while (allWords[next] != NULL)
     {
-        while (arr[i] != '\n' && arr[i] != ' ' && arr[i] != '\t')
+        strcpy(potentialWord, allWords[next]);
+        // printf("after copy: %s\n", potentialWord);
+
+        int potentialWordLength = strlen(potentialWord);
+       
+        
+        if (potentialWordLength - WordLength == 0)
         {
-            printWord[j] = arr[i];
-            j++;
-            i++;
-        }
-        if (j - length == 0)
-        {
-            if (containWord(printWord, word))
-                {
-                    printf("%s", printWord);
-                }
-        }
-        if (j - length == 1)
-        {
-            char checkWord[j];
-            int index = 0;
-            int k = j;
-            while (k)
+            if (containWord(potentialWord, word))
             {
-                for (int w = 0; w < j; w++)
+                printf("%s\n", potentialWord);
+            }
+        }
+
+
+        if (potentialWordLength - WordLength == 1)
+        {
+            char similarWord[WordLength];
+
+            int letterToCut = 0;
+            while (letterToCut < potentialWordLength)
+            {
+                // printf("letter: %d \n", letterToCut);
+                int index = 0;
+                for (int insert = 0; potentialWord[insert]; insert++)
                 {
-                    if (w != k)
+                    if (insert != letterToCut)
                     {
-                        checkWord[index] = printWord[w];
+                        similarWord[index] = potentialWord[insert];
                         index++;
                     }
                 }
-                index = 0;
-                if (containWord(checkWord, word))
+                similarWord[index] = '\0';
+                //  printf("!!word im sent %s\n", similarWord);
+
+                if (containWord(similarWord, word))
                 {
-                    printf("%s", printWord);
-                    k = 0;
+                    printf("%s\n", potentialWord);
+                    letterToCut = potentialWordLength;
                 }
                 else
                 {
-                    k--;
+                    letterToCut++;
                 }
             }
         }
+        next++;
+        allWords[next] = strtok(NULL, " \n\t\0\r");
     }
 }
 
 int containWord(char arr[], char word[])
 {
     int length = strlen(word);
-    int j = 0;
-    for (int i = 0; i < LINE; i++)
+    int i = 0;
+
+    while ((arr[i] == word[i]) && (arr[i] >= 'a') && (arr[i] <= 'z'))
     {
-        while (arr[i] == word[j])
-        {
-            j++;
-            i++;
-        }
-        if (j == length)
-        {
-            return 1;
-        }
-        j = 0;
+        i++;
+    }
+    if (i == length)
+    {
+        return 1;
     }
     return 0;
 }
 
 int main()
 {
-    char arr[LINE];
+    char arr[LINE] = {0};
     char option;
-    char word[WORD];
+    char word[WORD] = {0};
 
     fgets(arr, LINE, stdin);
 
     int j = 0;
 
-    while (arr[j] != '\n' && arr[j] != ' ' && arr[j] != '\t')
+    while ((arr[j] != '\n') && (arr[j] != '\0') && (arr[j] != ' ') && (arr[j] != '\t') && (arr[j] != '\r'))
     {
         word[j] = arr[j];
         j++;
@@ -128,9 +133,9 @@ int main()
     {
         while (fgets(arr, LINE, stdin))
         {
-            getword(arr, word);
+            getWord(arr, word);
         }
-    }
+    }   
 
     return 0;
 }
