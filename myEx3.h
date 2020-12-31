@@ -7,8 +7,8 @@ int check(int *arr, int i);
 void printArr(int* arr , int size);
 
 
-int getLine(char arr[], char word[]);
-void getword(char arr[], char word[]);
+int getLine ( char arr[], char word[]);
+void getWord(char arr[], char word[]);
 int containWord(char arr[], char word[]);
 
 #endif //MYEX3_H
