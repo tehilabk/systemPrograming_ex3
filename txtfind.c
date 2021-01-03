@@ -88,7 +88,7 @@ int main()
     j++;
     option = arr[j];
 
-    if (option == 'a' || option == 'A')
+    if (option == 'a')
     {
         while (fgets(arr, LINE, stdin))
         {
@@ -96,7 +96,7 @@ int main()
         }
     }
 
-    if (option == 'b' || option == 'B')
+    if (option == 'b')
     {
         while (fgets(arr, LINE, stdin))
         {
