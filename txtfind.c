@@ -26,7 +26,7 @@ void getWord(char arr[], char word[]){
     int WordLength = strlen(word);                          //length of the word to find
     int next = 0;                                           //index for next word
     char potentialWord[WORD];                               //words with the same length or length plus one of word to find
-    allWords[next] = strtok(arr, " \n\t\0\r");        //works like split
+    allWords[next] = strtok(arr, " \n\t\0");        //works like split
     while (allWords[next] != NULL){
         strcpy(potentialWord, allWords[next]);              //copies the word from all word to the arr
         int potentialWordLength = strlen(potentialWord);    //length of temp word
@@ -57,7 +57,7 @@ void getWord(char arr[], char word[]){
             }
         }
         next++;                                             //next word in allwords
-        allWords[next] = strtok(NULL, " \n\t\0\r");//adds the next word
+        allWords[next] = strtok(NULL, " \n\t\0");//adds the next word
     }
 }
 
@@ -80,7 +80,7 @@ int main()
     char word[WORD] = {0};
     fgets(arr, LINE, stdin);
     int j = 0;
-    while ((arr[j] != '\n') && (arr[j] != '\0') && (arr[j] != ' ') && (arr[j] != '\t') && (arr[j] != '\r'))
+    while ((arr[j] != '\n') && (arr[j] != '\0') && (arr[j] != ' ') && (arr[j] != '\t'))
     {
         word[j] = arr[j];
         j++;
